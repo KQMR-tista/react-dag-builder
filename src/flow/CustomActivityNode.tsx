@@ -1,7 +1,10 @@
 import React, {useState} from 'react';
-import {Handle, Position, NodeProps, Node} from "@xyflow/react";
-import {IconButton, InputLabel, MenuItem, Select} from "@mui/material";
+import {Handle, Position, NodeProps, Node, ControlButton} from "@xyflow/react";
+import {Button, IconButton, InputLabel, MenuItem, Select} from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
+import {ReactJSXElement} from "@emotion/react/types/jsx-namespace";
+import AddIcon from '@mui/icons-material/Add';
+import AddDetailsDialog from "./addDetails/AddDetailsDialog";
 
 let activitiesList: string[] = ['Build Docker Container', 'Push image to ECR', 'Deploy container to ECS' ]
 
@@ -22,12 +25,20 @@ let activitiesList: string[] = ['Build Docker Container', 'Push image to ECR', '
  */
 function CustomActivityNode({data, id}: NodeProps<customActivityNode>) {
     let [selection, setSelection] = useState('');
+    let [dialogOpenState, setDialogOpenState] = useState(false);
+
 
     /* Set the selected activity. Adds the selection to data prop passed up to parent */
     const onselectionchange = (e: any) => {
         setSelection(e.target.value);
         data.activityType = (e.target.value);
     }
+
+    const addActivityDetailsBtn: ReactJSXElement = (
+        <Button size={'small'} variant="outlined" style={{color: "white", backgroundColor:'darkblue'}} startIcon={<AddIcon/>} onClick={() => setDialogOpenState(true)}>
+            Details
+        </Button>
+    );
 
     return (
         <>
@@ -46,6 +57,15 @@ function CustomActivityNode({data, id}: NodeProps<customActivityNode>) {
                     <IconButton onClick={() => data.onDeleteNodeButtonClick(id)}>
                         <DeleteIcon style={{fontSize: '20px'}} />
                     </IconButton>
+                </div>
+
+                <div style={{paddingTop: '5px'}}>
+                    {selection !== '' ? addActivityDetailsBtn: null}
+
+                    <AddDetailsDialog
+                        openDialog={dialogOpenState}
+                        closeDialog={() => setDialogOpenState(false)}
+                        dialogName={selection}/>
                 </div>
 
                 {/*Position of the edge connectors*/}

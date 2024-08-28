@@ -102,7 +102,7 @@ function DirectedAcyclicGraph(props: any) {
                 id: activityId,
                 position: {x: 20, y: yPos.current + 50},
                 type: 'customActivityNode',
-                data: {label: 'Activity ' + activityId, onDeleteNodeButtonClick: (nodeId: string) => deleteActivityNodeById(nodeId)},
+                data: {label: 'Activity', onDeleteNodeButtonClick: (nodeId: string) => deleteActivityNodeById(nodeId)},
                 resizing: true,
                 deletable: true,
                 selectable: true,
@@ -123,12 +123,11 @@ function DirectedAcyclicGraph(props: any) {
 
 
     /**
-     * TODO:: When user clicks on the Generate DAG. Get the current node and edge state and generate the payload to be sent to backend for furthur processing
+     * TODO:: When user clicks on the Generate DAG. Get the current node and edge state and generate the payload to be sent to backend for further processing
      */
     function generateDag() {
         console.log(nodes);
         console.log(edges);
-
     }
 
     return (
