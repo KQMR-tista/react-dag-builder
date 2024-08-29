@@ -1,0 +1,65 @@
+{
+  "controlSchema":{
+    "Build Docker Container":
+    {
+      "type": "object",
+      "properties": {
+        "DockerFile Location": {
+          "type": "string"
+        },
+        "Image Name": {
+          "type": "string"
+        },
+        "Image Tag": {
+          "type": "string"
+        }
+      },
+      "required": ["DockerFile Location", "Image Name", "Image Tag"]
+    },
+    "Push image to ECR":
+    {
+      "type": "object",
+      "properties": {
+        "ECR Repository": {
+          "type": "string"
+        },
+        "Region": {
+          "type": "string"
+        }
+      },
+      "required": ["ECR Repository", "Region"]
+    }
+  },
+  "uiSchema": {
+    "Build Docker Container":{
+      "type": "VerticalLayout",
+      "elements": [
+          {
+            "type": "Control",
+            "scope": "#/properties/DockerFile Location"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/Image Name"
+          },
+          {
+            "type": "Control",
+            "scope": "#/properties/Image Tag"
+          }
+        ]
+    },
+    "Push image to ECR":{
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/ECR Repository"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/Region"
+        }
+      ]
+    }
+  }
+}

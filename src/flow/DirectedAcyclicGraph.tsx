@@ -90,8 +90,10 @@ function DirectedAcyclicGraph(props: any) {
         </Button>
     );
 
+
     /* Track the y-axis of the React flow workspace*/
     const yPos = useRef(0);
+
     /**
      * On click of add activity button, adds a new custom node to the DAG
      */
@@ -120,7 +122,6 @@ function DirectedAcyclicGraph(props: any) {
     const deleteActivityNodeById = (id: String) => {
         setNodes((nodes) => nodes.filter((node) => node.id !== id));
     }
-
 
     /**
      * TODO:: When user clicks on the Generate DAG. Get the current node and edge state and generate the payload to be sent to backend for further processing
