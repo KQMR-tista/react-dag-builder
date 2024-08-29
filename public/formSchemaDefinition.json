@@ -28,25 +28,41 @@
         }
       },
       "required": ["ECR Repository", "Region"]
+    },
+    "Upload Report to S3":
+    {
+      "type": "object",
+      "properties": {
+        "S3 Bucket name": {
+          "type": "string"
+        },
+        "Upload File Name": {
+          "type": "string"
+        },
+        "Upload File Path": {
+          "type": "string"
+        }
+      },
+      "required": ["S3 Bucket name", "Upload File Name", "Upload File Path"]
     }
   },
   "uiSchema": {
     "Build Docker Container":{
       "type": "VerticalLayout",
       "elements": [
-          {
-            "type": "Control",
-            "scope": "#/properties/DockerFile Location"
-          },
-          {
-            "type": "Control",
-            "scope": "#/properties/Image Name"
-          },
-          {
-            "type": "Control",
-            "scope": "#/properties/Image Tag"
-          }
-        ]
+        {
+          "type": "Control",
+          "scope": "#/properties/DockerFile Location"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/Image Name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/Image Tag"
+        }
+      ]
     },
     "Push image to ECR":{
       "type": "VerticalLayout",
@@ -60,6 +76,24 @@
           "scope": "#/properties/Region"
         }
       ]
+    },
+    "Upload Report to S3":{
+      "type": "VerticalLayout",
+      "elements": [
+        {
+          "type": "Control",
+          "scope": "#/properties/S3 Bucket name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/Upload File Name"
+        },
+        {
+          "type": "Control",
+          "scope": "#/properties/Upload File Path"
+        }
+      ]
     }
+
   }
 }
