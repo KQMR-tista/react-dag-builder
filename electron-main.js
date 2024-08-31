@@ -1,10 +1,18 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require("electron");
+const { app, BrowserWindow} = require("electron");
 const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const localServerApp = express();
+const ps = require('ps-node');
+
+// Spawn a java process
+const JavaProcess = require('./electron/spawnJavaProcess')
+
 const PORT = 8088;
+
+let childProcessIds = [];
+
 const startLocalServer = (done) => {
     localServerApp.use(express.json({ limit: "100mb" }));
     localServerApp.use(cors());
@@ -13,6 +21,10 @@ const startLocalServer = (done) => {
         console.log("Server Started on PORT ", PORT);
         done();
     });
+
+    /* Code to spawn the child JAVA process*/
+    let javaProcessPID = JavaProcess.spawnJavaProcess();
+    childProcessIds.push(javaProcessPID);
 };
 
 function createWindow() {
@@ -55,3 +67,21 @@ app.on("window-all-closed", function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+
+
+
+/*
+    Kill all child processes on quit of the main process
+ */
+app.on('before-quit', function() {
+    childProcessIds.forEach(function(pid) {
+        ps.kill( pid, function( err ) {
+            if (err) {
+                throw new Error( err );
+            }
+            else {
+                console.log( 'Process %s has been killed!', pid );
+            }
+        });
+    });
+});
